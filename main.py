@@ -1,7 +1,8 @@
-from logic import *
+from graphics import *
 import sys
 
 matrixPrint(matrix)
+
 
 def main():
     pygame.init()
@@ -15,12 +16,12 @@ def main():
     glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0)
     glutDisplayFunc(Cube)
     glutKeyboardFunc(keybrd)
+    CreateMenu()
 
     glutMainLoop()
 
 
 main()
-
 
 ##Andrian Horban, Lviv National University UKRAINE
 ##Python 3.7 PyOpenGL 1.11a1 +PyGame
@@ -30,4 +31,3 @@ main()
 
 ##100% working logic of the game
 ##In future: normal tex, menu, messages about end or start
-

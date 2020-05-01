@@ -1,15 +1,16 @@
 from OpenGL.GLUT import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from logic import *
 import pygame
 
-edges=()  #НЕ ЗАБУТИ!!: ЗЛІВА ВЕРХ НА ПРАВО(ПРОТИ ГОДИН)
+edges = ()  # НЕ ЗАБУТИ!!: ЗЛІВА ВЕРХ НА ПРАВО(ПРОТИ ГОДИН)
 
 textureCoords = (
     (0.0, 1.0),
-     (0.0, 0.0),
-     (1.0, 0.0),
-     (1.0, 1.0)
+    (0.0, 0.0),
+    (1.0, 0.0),
+    (1.0, 1.0)
 )
 
 verticies = (
@@ -114,17 +115,18 @@ textures = {
     32: texture32,
     64: texture64
 }
+
+
 def swapTexture(matrix):
     for row in range(len(matrix)):
         for clm in range(len(matrix)):
-            value=matrix[row][clm]
-            verticiesId=row*4+clm
-            subTex(textures[value],verticiesId)
+            value = matrix[row][clm]
+            verticiesId = row * 4 + clm
+            subTex(textures[value], verticiesId)
 
 
-def subTex(textureSurface,verticiesId):
-
-    TextureData = pygame.image.tostring(textureSurface, "RGBA",1)
+def subTex(textureSurface, verticiesId):
+    TextureData = pygame.image.tostring(textureSurface, "RGBA", 1)
     width = textureSurface.get_width()
     height = textureSurface.get_height()
     texid = glGenTextures(1)
@@ -138,18 +140,110 @@ def subTex(textureSurface,verticiesId):
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glBegin(GL_QUADS)
     for j in range(4):
-      glTexCoord2f(textureCoords[j][0], textureCoords[j][1])
-      glVertex2f(verticies[verticiesId][j][0],verticies[verticiesId][j][1])
+        glTexCoord2f(textureCoords[j][0], textureCoords[j][1])
+        glVertex2f(verticies[verticiesId][j][0], verticies[verticiesId][j][1])
 
     glEnd()
     glFlush()
     return texid
 
-def Cube():
-     glBegin(GL_QUADS)
-     for vertex in verticies:
-          for elem in vertex:
-             glVertex2f(elem[0],elem[1])
-     glEnd()
-     glFlush()
 
+def Cube():
+    glBegin(GL_QUADS)
+    for vertex in verticies:
+        for elem in vertex:
+            glVertex2f(elem[0], elem[1])
+    glEnd()
+    glFlush()
+
+
+def keybrd(key, x, y):
+    ch = ord(key.decode("ascii"))
+    if ch == 13:
+        swapTexture(matrix)
+        print("start")
+
+    if (chr(ch) == 'q'):
+        sys.exit("exit")
+
+    if (chr(ch) == 'a'):
+        print("event left")
+        moveLeft(matrix)
+        if checkNull(matrix) == True:
+            Insertion(matrix)
+        else:
+            sys.exit("Player lost")
+        swapTexture(matrix)
+
+    if (chr(ch) == 's'):
+        print("event down")
+        moveDown(matrix)
+        if checkNull(matrix) == True:
+            Insertion(matrix)
+        else:
+            sys.exit("Player lost")
+        swapTexture(matrix)
+
+    if (chr(ch) == 'w'):
+        print("event up")
+        moveUp(matrix)
+        if checkNull(matrix) == True:
+            Insertion(matrix)
+        else:
+            sys.exit("Player lost")
+        swapTexture(matrix)
+
+    if (chr(ch) == 'd'):
+        print("event right")
+        moveRight(matrix)
+        if checkNull(matrix) == True:
+            Insertion(matrix)
+        else:
+            sys.exit("Player lost")
+        swapTexture(matrix)
+
+
+def itemMenu(value):
+    if value == 1:
+        sys.exit("Exit from menu")
+    if value == 2:
+        print("Starting form Menu")
+        swapTexture(matrix)
+    if value==3:
+        print("Restart from Menu")
+        restart(matrix)
+        swapTexture(matrix)
+    if value==4:
+        print("Left from Menu")
+        moveLeft(matrix)
+        Insertion(matrix)
+        swapTexture(matrix)
+    if value==5:
+        print("Right from Menu")
+        moveRight(matrix)
+        Insertion(matrix)
+        swapTexture(matrix)
+    if value==6:
+        print("Up from Menu")
+        moveUp(matrix)
+        Insertion(matrix)
+        swapTexture(matrix)
+    if value==7:
+        print("Down from Menu")
+        moveDown(matrix)
+        Insertion(matrix)
+        swapTexture(matrix)
+
+
+def CreateMenu():
+    menu = glutCreateMenu(itemMenu)
+    glutAddMenuEntry("Exit", 1)
+    glutAddMenuEntry("Start", 2)
+    glutAddMenuEntry("Restart", 3)
+    glutAddMenuEntry("Move Left", 4)
+    glutAddMenuEntry("Move Right", 5)
+    glutAddMenuEntry("Move Up", 6)
+    glutAddMenuEntry("Move Down", 7)
+    glutAttachMenu(GLUT_RIGHT_BUTTON)
+    # Add the following line to fix your code
+    return 0
