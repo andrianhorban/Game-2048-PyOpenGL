@@ -105,6 +105,12 @@ texture8 = pygame.image.load('textures/8.png')
 texture16 = pygame.image.load('textures/16.png')
 texture32 = pygame.image.load('textures/32.png')
 texture64 = pygame.image.load('textures/64.png')
+texture128 = pygame.image.load('textures/128.png')
+texture256 = pygame.image.load('textures/256.png')
+texture512 = pygame.image.load('textures/512.png')
+texture1024 = pygame.image.load('textures/1024.png')
+texture2048 = pygame.image.load('textures/2048.png')
+texture4096 = pygame.image.load('textures/4096.png')
 
 textures = {
     0: texture0,
@@ -113,7 +119,13 @@ textures = {
     8: texture8,
     16: texture16,
     32: texture32,
-    64: texture64
+    64: texture64,
+    128: texture64,
+    256: texture64,
+    512: texture64,
+    1024: texture64,
+    2048: texture64,
+    4096: texture64
 }
 
 
@@ -163,10 +175,10 @@ def keybrd(key, x, y):
         swapTexture(matrix)
         print("start")
 
-    if (chr(ch) == 'q'):
+    if (chr(ch) == 'q' or (chr(ch)=='й')):
         sys.exit("exit")
 
-    if (chr(ch) == 'a'):
+    if (chr(ch) == 'a') or (chr(ch)=='ф'):
         print("event left")
         moveLeft(matrix)
         if checkNull(matrix) == True:
@@ -175,7 +187,7 @@ def keybrd(key, x, y):
             sys.exit("Player lost")
         swapTexture(matrix)
 
-    if (chr(ch) == 's'):
+    if (chr(ch) == 's' or (chr(ch)=='ы')):
         print("event down")
         moveDown(matrix)
         if checkNull(matrix) == True:
@@ -184,7 +196,7 @@ def keybrd(key, x, y):
             sys.exit("Player lost")
         swapTexture(matrix)
 
-    if (chr(ch) == 'w'):
+    if (chr(ch) == 'w' or (chr(ch)=='ц')):
         print("event up")
         moveUp(matrix)
         if checkNull(matrix) == True:
@@ -193,7 +205,7 @@ def keybrd(key, x, y):
             sys.exit("Player lost")
         swapTexture(matrix)
 
-    if (chr(ch) == 'd'):
+    if (chr(ch) == 'd' or (chr(ch)=='в')):
         print("event right")
         moveRight(matrix)
         if checkNull(matrix) == True:
