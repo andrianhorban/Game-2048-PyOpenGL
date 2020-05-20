@@ -14,9 +14,9 @@ def main():
     glutCreateWindow(b"Kursova2048")
     glEnable(GL_TEXTURE_2D)
     glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0)
-    glutDisplayFunc(Cube)
     glutKeyboardFunc(keybrd)
     CreateMenu()
+    Cube()
 
     glutMainLoop()
 
